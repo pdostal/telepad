@@ -3,6 +3,7 @@
   "main": "app.coffee",
   "version": "0.0.6",
   "description": "Telegram bot",
+  "readme": "README.md",
   "license" : "MIT",
   "repository": {
     "type": "git",
