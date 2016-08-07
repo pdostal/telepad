@@ -1,8 +1,10 @@
+secret = require './secret.js'
+
 moment = require 'moment'
 TelegramBot = require 'node-telegram-bot-api'
 Mqtt = require 'mqtt'
 
-telegram = new TelegramBot '226026540:AAEroOt-n4COgqA4_H587F37A07l3gCrOU8', { polling: true }
+telegram = new TelegramBot secret.telegram_token, { polling: true }
 mqtt = Mqtt.connect { host: 'iot.siliconhill.cz', port: 1883, protocolId: 'MQIsdp', protocolVersion: 3 }
 
 mqtt.on 'connect', ->
