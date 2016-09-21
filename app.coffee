@@ -10,7 +10,7 @@ mqtt = Mqtt.connect { host: secret.mqtthost, port: secret.mqttport, protocolId: 
 redis = Redis.createClient(secret.redisport, secret.redishost)
 
 telegram.getMe().then (data) ->
-  console.log 'TELEGRAM Connected as:'+data.id
+  console.log 'TELEGRAM Connected as: '+data.id
 .catch (err) ->
   console.log 'TELEGRAM Error: '+err
 
