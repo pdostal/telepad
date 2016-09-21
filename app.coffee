@@ -3,13 +3,27 @@ Mqtt = require 'mqtt'
 Redis = require 'redis'
 
 secret = require './secret.js'
+console.log 'Modules loaded'
 
 telegram = new TelegramBot secret.telegram_token, { polling: true }
-mqtt = Mqtt.connect { host: 'iot.siliconhill.cz', port: 1883, protocolId: 'MQIsdp', protocolVersion: 3 }
-redis = Redis.createClient()
+mqtt = Mqtt.connect { host: secret.mqtthost, port: secret.mqttport, protocolId: 'MQIsdp', protocolVersion: 3 }
+redis = Redis.createClient(secret.redisport, secret.redishost)
+
+telegram.getMe().then (data) ->
+  console.log 'TELEGRAM Connected as:'+data.id
+.catch (err) ->
+  console.log 'TELEGRAM Error: '+err
+
+redis.on 'connect', () ->
+  console.log 'REDIS Connected to: '+secret.redishost+':'+secret.redisport
+redis.on 'error', (error) ->
+  console.log 'REDIS Error: '+error
 
 mqtt.on 'connect', ->
+  console.log 'MQTT Connected to: '+secret.mqtthost+':'+secret.mqttport
   mqtt.subscribe '/pdostalcz/+'
+mqtt.on 'error', (error) ->
+  console.log 'MQTT Error: '+error
 
 telegram.onText /^\/echo (.+)$/, (msg, match) ->
   telegram.sendMessage msg.from.id, match[1]

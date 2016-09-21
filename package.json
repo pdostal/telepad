@@ -9,6 +9,9 @@
     "type": "git",
     "url": "git://github.com/pdostal/telepad.git"
   },
+  "scripts": {
+    "start": "coffee app.coffee"
+  },
   "dependencies": {
     "node-telegram-bot-api": "0.23.3",
     "redis": "2.6.2",
